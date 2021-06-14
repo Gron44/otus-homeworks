@@ -6,8 +6,6 @@ REPO=https://github.com/Gron44/otus-homeworks.git
 DOCKER_IMAGE=express42/otus-homeworks:0.7.1
 
 echo GROUP:$GROUP
-echo BRANCH:$TRAVIS_BRANCH
-# env
 
 if [ "$TRAVIS_BRANCH" == "" ]; then
 	echo "We don't have tests for master branch"
@@ -15,6 +13,9 @@ if [ "$TRAVIS_BRANCH" == "" ]; then
 fi
 
 echo HOMEWORK:$TRAVIS_BRANCH
+ls -alh ./otus-homeworks/
+
+find / -type d -name 'otus-homeworks' 2> /dev/null
 
 if [ -f $HOMEWORK_RUN ]; then
 	echo "Run tests"

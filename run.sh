@@ -1,20 +1,20 @@
 #!/bin/bash
 GROUP=2021-05
-BRANCH=${GITHUB_REF##*/}
-HOMEWORK_RUN=./otus-homeworks/homeworks/$BRANCH/run.sh
+# BRANCH=${GITHUB_REF##*/}
+HOMEWORK_RUN=./otus-homeworks/homeworks/$TRAVIS_BRANCH/run.sh
 REPO=https://github.com/Gron44/otus-homeworks.git
 DOCKER_IMAGE=express42/otus-homeworks:0.7.1
 
 echo GROUP:$GROUP
-echo GITHUB_REF:$GITHUB_REF
-env
+echo BRANCH:$TRAVIS_BRANCH
+# env
 
-if [ "$BRANCH" == "" ]; then
+if [ "$TRAVIS_BRANCH" == "" ]; then
 	echo "We don't have tests for master branch"
 	exit 0
 fi
 
-echo HOMEWORK:$BRANCH
+echo HOMEWORK:$TRAVIS_BRANCH
 
 if [ -f $HOMEWORK_RUN ]; then
 	echo "Run tests"
@@ -25,9 +25,9 @@ if [ -f $HOMEWORK_RUN ]; then
 		--device /dev/net/tun --name hw-test --network hw-test-net $DOCKER_IMAGE
 	# Show versions & run tests
 	docker exec hw-test bash -c 'echo -=Get versions=-; ansible --version; ansible-lint --version; packer version; terraform version; tflint --version; docker version; docker-compose --version'
-	docker exec -e USER=appuser -e BRANCH=$BRANCH hw-test $HOMEWORK_RUN
+	docker exec -e USER=appuser -e BRANCH=$TRAVIS_BRANCH hw-test $HOMEWORK_RUN
 
-	# ssh -i id_rsa_test -p 33433 root@localhost "cd /srv && BRANCH=$BRANCH $HOMEWORK_RUN"
+	# ssh -i id_rsa_test -p 33433 root@localhost "cd /srv && BRANCH=$TRAVIS_BRANCH $HOMEWORK_RUN"
 else
 	echo "We don't have tests for this homework"
 	exit 0

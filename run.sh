@@ -2,10 +2,11 @@
 GROUP=2021-05
 BRANCH=${GITHUB_REF##*/}
 HOMEWORK_RUN=./otus-homeworks/homeworks/$BRANCH/run.sh
-REPO=https://github.com/express42/otus-homeworks.git
+REPO=https://github.com/Gron44/otus-homeworks.git
 DOCKER_IMAGE=express42/otus-homeworks:0.7.1
 
 echo GROUP:$GROUP
+echo GITHUB_REF:$GITHUB_REF
 
 if [ "$BRANCH" == "" ]; then
 	echo "We don't have tests for master branch"

@@ -7,6 +7,7 @@ DOCKER_IMAGE=express42/otus-homeworks:0.7.1
 
 echo GROUP:$GROUP
 echo GITHUB_REF:$GITHUB_REF
+env
 
 if [ "$BRANCH" == "" ]; then
 	echo "We don't have tests for master branch"

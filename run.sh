@@ -16,6 +16,7 @@ echo HOMEWORK:$BRANCH
 
 echo "Clone repository with tests"
 git clone -b $GROUP --single-branch $REPO
+find / -type d -name 'otus-homeworks'
 
 if [ -f $HOMEWORK_RUN ]; then
 	echo "Run tests"
@@ -27,6 +28,7 @@ if [ -f $HOMEWORK_RUN ]; then
 	# Show versions & run tests
 	docker exec hw-test bash -c 'echo -=Get versions=-; ansible --version; ansible-lint --version; packer version; terraform version; tflint --version; docker version; docker-compose --version'
 	docker exec -e USER=appuser -e BRANCH=$BRANCH hw-test $HOMEWORK_RUN
+	docker exec -e USER=appuser find / -type d -name 'otus-homeworks'
 
 	# ssh -i id_rsa_test -p 33433 root@localhost "cd /srv && BRANCH=$BRANCH $HOMEWORK_RUN"
 else
